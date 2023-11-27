@@ -87,7 +87,7 @@ async def train_dcgan(projectName) :
     # IP = config('API_BASE_URL')
     # WEBSOCKET_API_URL = f"ws://{IP}/webSocketHandler"
 
-    WEBSOCKET_API_URL = "ws://192.168.177.110:8001/webSocketHandler" 
+    WEBSOCKET_API_URL = "ws://34.64.91.230:8001/webSocketHandler" 
 
     async with websockets.connect(WEBSOCKET_API_URL) as websocket:
         epoch_time = 0
