@@ -8,6 +8,7 @@ WORKDIR /gm
 COPY requirements.txt .
 
 # Install necessary packages, avoiding the use of pip cache
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy all files from the current directory of the host machine into the /gm
