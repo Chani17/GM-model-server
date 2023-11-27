@@ -6,10 +6,6 @@ from zipfile import ZipFile
 from pydantic import BaseModel
 from gmModel_DC.generate import generate_dcgan
 from gmModel_DC.train import train_dcgan
-from generate_fmnist import generate_fmnist
-from generate_gm import generate_gm
-from generate_gm import generate_main
-
 
 app = FastAPI()
 
