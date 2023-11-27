@@ -10,6 +10,7 @@ COPY requirements.txt .
 # Install necessary packages, avoiding the use of pip cache
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install torch torchvision torchaudio
 
 # Copy all files from the current directory of the host machine into the /gm
 COPY . .
