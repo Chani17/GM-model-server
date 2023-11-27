@@ -11,6 +11,7 @@ COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install torch torchvision torchaudio
+RUN pip install uvicorn
 
 # Copy all files from the current directory of the host machine into the /gm
 COPY . .
