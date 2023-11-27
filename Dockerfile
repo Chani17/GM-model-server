@@ -8,9 +8,9 @@ WORKDIR /gm
 COPY requirements.txt .
 
 # Install necessary packages, avoiding the use of pip cache
-RUN pip install --no-cache-dir --find-links=/C:/b/abs_36eb5mzhph/croot/certifi_1690232276943/work/certifi \
-                                    --find-links=/C:/b/abs_49n3v2hyhr/croot/cffi_1670423218144/work \
-                                    --find-links=/tmp/build/80754af9/charset-normalizer_1630003229654/work \
+RUN pip install --no-cache-dir --find-links=file:///C:/b/abs_36eb5mzhph/croot/certifi_1690232276943/work/certifi \
+                                    --find-links=file:///C:/b/abs_49n3v2hyhr/croot/cffi_1670423218144/work \
+                                    --find-links=file:///tmp/build/80754af9/charset-normalizer_1630003229654/work \
                                     -r requirements.txt
 
 # Copy all files from the current directory of the host machine into the /gm
