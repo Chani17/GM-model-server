@@ -1,5 +1,5 @@
 # Use the official python base image
-FROM python:3.8
+FROM python:3.9
 
 # Set the working directory inside the conatiner to /gm
 WORKDIR /gm
