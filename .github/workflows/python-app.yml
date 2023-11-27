@@ -1,0 +1,60 @@
+name: GM Model Service CI/CD 
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install Docker and Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install \
+          apt-transport-https \
+          ca-certificates \
+          curl \
+          software-properties-common
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo apt-get update
+        sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+        sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        
+    - name: Docker hub login
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_ID }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Docker image build
+      run: |
+        docker build -t ${{ secrets.DOCKER_ID }}/gm-model .
+        
+    - name: Docker Hub push
+      run: docker push ${{ secrets.DOCKER_ID }}/gm-model
+        
+    - name: Deploy to Instance
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        passphrase: ${{ secrets.PRIVATE_KEY_PASSWORD }}
+        run: |
+          sudo docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
+          sudo docker pull ${{ secrets.DOCKER_ID }}/gm-model
+          sudo docker rm -f $(docker ps -qa) 2>/dev/null || true
+          sudo docker-compose up -d
+          sudo docker run -d --name gm-model -p 5000:5000 gm-model
