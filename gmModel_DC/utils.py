@@ -15,13 +15,6 @@ def get_data(projectName, params):
     target_dir = 'gmModel_DC/user_dataset/'+projectName+'/'+projectName
     # root = 'gmModel_DC/user_dataset/'+params['projectName']+'/'+params['projectName']
 
-    print(f"Files and directories in {target_dir}:")
-    for root, dirs, files in os.walk(target_dir):
-        for directory in dirs:
-            print("dirs : ", os.path.join(root, directory))
-        for file in files:
-            print("files : ", os.path.join(root, file))
-
     # Data proprecessing.
     transform = transforms.Compose([
         transforms.Resize(params['imsize']),

@@ -34,7 +34,7 @@ async def train_dcgan(projectName) :
         'nz': 100,
         'ngf': 64,
         'ndf': 64,
-        'nepochs': 5,
+        'nepochs': 3,
         'lr': 0.0002,
         'beta1': 0.5,
         'save_epoch': 10
