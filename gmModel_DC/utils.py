@@ -11,7 +11,7 @@ def get_data(params):
     Returns a PyTorch DataLoader.
 
     """
-    root = 'user_dataset/'+params['projectName']
+    root = 'user_dataset/'+params['projectName']+'/'+params['projectName']
 
     # Data proprecessing.
     transform = transforms.Compose([
