@@ -25,6 +25,7 @@ class File(BaseModel):
     zipUrl: str
 
 
+
 # 클라우드 zip 파일 URL 가져오기
 @app.post("/get/url")
 async def download_and_extract(item: File):
@@ -34,6 +35,7 @@ async def download_and_extract(item: File):
     print( projectName, email  , zipUrl)
 
     target_dir = 'user_dataset/'+projectName
+    target_dir2 = 'gmModel_DC/user_dataset/'+projectName
 
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
@@ -45,6 +47,8 @@ async def download_and_extract(item: File):
     
 
     file_path = os.path.join(target_dir, projectName+'_dataset.zip')
+    file_path2 = os.path.join(target_dir2, projectName+'_dataset.zip')
+
     # 파일 저장
     with open(file_path, "wb") as f:
         f.write(response.content)
@@ -56,9 +60,27 @@ async def download_and_extract(item: File):
     #다운받은 zip 파일 삭제
     os.remove(file_path)
 
+    # 파일 저장
+    with open(file_path2, "wb") as f:
+        f.write(response.content)
+
+    # 압축 해제
+    with ZipFile(file_path2, "r") as zip_ref:
+        zip_ref.extractall(target_dir2)
+
+    #다운받은 zip 파일 삭제
+    os.remove(file_path2)
+
+    # 압축 해제 후 target_dir 내의 모든 파일과 디렉토리 출력
+    print(f"Files and directories in {target_dir}:")
+    for root, dirs, files in os.walk(target_dir):
+        for directory in dirs:
+            print("dirs : ", os.path.join(root, directory))
+        for file in files:
+            print("files : ", os.path.join(root, file))
+
     await train_dcgan(projectName)
     await generate_images(projectName, email)
-
 
 
 #이미지 생성 + zip 파일로 압축

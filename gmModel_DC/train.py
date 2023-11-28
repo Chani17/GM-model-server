@@ -1,6 +1,4 @@
-import asyncio
 import datetime
-import json
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
@@ -30,7 +28,6 @@ async def train_dcgan(projectName) :
         
 
     params = {
-        "projectName" : projectName,
         "bsize": 128,
         'imsize': 64,
         'nc': 3,
@@ -46,7 +43,7 @@ async def train_dcgan(projectName) :
     device = torch.device("cuda:0" if(torch.cuda.is_available()) else "cpu")
     print(device, " will be used.\n")
 
-    dataloader = get_data(params)
+    dataloader = get_data(projectName, params)
 
     sample_batch = next(iter(dataloader))
     plt.figure(figsize=(8, 8))
