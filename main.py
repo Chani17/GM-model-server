@@ -40,6 +40,9 @@ async def download_and_extract(item: File):
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
 
+    if not os.path.exists(target_dir2):
+        os.makedirs(target_dir2)
+
     # HTTP GET 요청을 보내 파일 다운로드
     response = requests.get(item.zipUrl)
     if response.status_code != 200:
