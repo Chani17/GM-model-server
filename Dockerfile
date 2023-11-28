@@ -17,4 +17,4 @@ RUN pip install uvicorn
 COPY . .
 
 # Run the application using Uvicorn with options for host, port, and automatic reload on code changes
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
