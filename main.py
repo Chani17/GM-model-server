@@ -53,6 +53,17 @@ async def download_and_extract(item: File):
     with ZipFile(file_path, "r") as zip_ref:
         zip_ref.extractall(target_dir)
 
+    #다운받은 zip 파일 삭제
+    os.remove(file_path)
+
+    # 압축 해제 후 target_dir 내의 모든 파일과 디렉토리 출력
+    print(f"Files and directories in {target_dir}:")
+    for root, dirs, files in os.walk(target_dir):
+        for directory in dirs:
+            print("dirs : ", os.path.join(root, directory))
+        for file in files:
+            print("files : ", os.path.join(root, file))
+
     await train_dcgan(projectName)
     await generate_images(projectName, email)
 
