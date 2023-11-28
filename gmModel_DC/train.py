@@ -30,13 +30,14 @@ async def train_dcgan(projectName) :
         
 
     params = {
+        "projectName" : projectName,
         "bsize": 128,
         'imsize': 64,
         'nc': 3,
         'nz': 100,
         'ngf': 64,
         'ndf': 64,
-        'nepochs': 2,
+        'nepochs': 15,
         'lr': 0.0002,
         'beta1': 0.5,
         'save_epoch': 10

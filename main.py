@@ -33,7 +33,7 @@ async def download_and_extract(item: File):
     zipUrl = item.zipUrl
     print( projectName, email  , zipUrl)
 
-    target_dir = 'user_dataset'
+    target_dir = 'user_dataset/'+projectName
 
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
@@ -44,7 +44,7 @@ async def download_and_extract(item: File):
         raise Exception("Can't download a file.")
     
 
-    file_path = os.path.join(target_dir, 'generated_images.zip')
+    file_path = os.path.join(target_dir, projectName+'_dataset.zip')
     # 파일 저장
     with open(file_path, "wb") as f:
         f.write(response.content)
@@ -55,6 +55,7 @@ async def download_and_extract(item: File):
 
     await train_dcgan(projectName)
     await generate_images(projectName, email)
+
 
 
 #이미지 생성 + zip 파일로 압축

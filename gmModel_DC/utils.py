@@ -3,7 +3,7 @@ import torchvision.transforms as transforms
 import torchvision.datasets as dset
 
 # Directory containing the data.
-root = 'gmModel_DC/data'
+
 
 def get_data(params):
     """
@@ -11,6 +11,8 @@ def get_data(params):
     Returns a PyTorch DataLoader.
 
     """
+    root = 'user_dataset/'+params['projectName']
+
     # Data proprecessing.
     transform = transforms.Compose([
         transforms.Resize(params['imsize']),
@@ -21,10 +23,3 @@ def get_data(params):
 
     # Create the dataset.
     dataset = dset.ImageFolder(root=root, transform=transform)
-
-    # Create the dataloader.
-    dataloader = torch.utils.data.DataLoader(dataset,
-        batch_size=params['bsize'],
-        shuffle=True)
-
-    return dataloader
