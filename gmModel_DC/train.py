@@ -26,7 +26,6 @@ async def train_dcgan(projectName) :
         if not os.path.exists(subdirectory_path):
             os.makedirs(subdirectory_path)
         
-
     params = {
         "bsize": 128,
         'imsize': 64,

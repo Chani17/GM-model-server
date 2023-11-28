@@ -5,7 +5,6 @@ import os
 
 # Directory containing the data.
 
-
 def get_data(projectName, params):
     """
     Loads the dataset and applies proproccesing steps to it.

@@ -25,7 +25,6 @@ class File(BaseModel):
     zipUrl: str
 
 
-
 # 클라우드 zip 파일 URL 가져오기
 @app.post("/get/url")
 async def download_and_extract(item: File):
